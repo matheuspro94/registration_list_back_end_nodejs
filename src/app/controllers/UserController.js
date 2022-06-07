@@ -3,7 +3,7 @@ const { format } = require('date-fns')
 
 module.exports = {
   async create (req, res) {
-    const { name, birthday } = req.body
+    const { name, birthday, email } = req.body
 
     const actualYear = new Date().getFullYear()
 
@@ -11,8 +11,15 @@ module.exports = {
 
     const age = Number(actualYear) - Number(formatAge)
 
+    const emailExists = await User.findOne({ where: { email } })
+
+    if (emailExists) {
+      return res.status(400).json({ error: 'Email already exists' })
+    }
+
     const user = await User.create({
       name,
+      email,
       birthday,
       age
     })
@@ -35,6 +42,12 @@ module.exports = {
 
     const age = Number(actualYear) - Number(formatAge)
 
+    const userID = await User.findByPk(id)
+
+    if (!userID) {
+      return res.status(400).json({ error: 'User not found' })
+    }
+
     const user = await User.update({
       name,
       birthday,
@@ -47,6 +60,27 @@ module.exports = {
 
     if (user) {
       return res.status(200).json({ message: 'successfully updated' })
+    } else {
+      return res.status(400).json({ message: 'user not found' })
+    }
+  },
+  async delete (req, res) {
+    const { id } = req.params
+
+    const userID = await User.findByPk(id)
+
+    if (!userID) {
+      return res.status(400).json({ error: 'User not found' })
+    }
+
+    const user = await User.destroy({
+      where: {
+        id
+      }
+    })
+
+    if (user) {
+      return res.status(200).json({ message: 'successfully deleted' })
     } else {
       return res.status(400).json({ message: 'user not found' })
     }

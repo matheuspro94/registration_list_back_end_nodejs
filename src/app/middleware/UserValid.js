@@ -4,6 +4,7 @@ module.exports = {
   async UserValidate (req, res, next) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
+      email: Yup.string().email().required(),
       birthday: Yup.date().required()
     })
 

@@ -4,6 +4,7 @@ class User extends Model {
   static init (connection) {
     super.init({
       name: DataTypes.STRING,
+      email: DataTypes.STRING,
       birthday: DataTypes.DATE,
       age: DataTypes.INTEGER
     }, {
