@@ -27,7 +27,7 @@ module.exports = {
 
     return res.status(200).json(user)
   },
-  async list (req, res) {
+  async index (req, res) {
     const users = await User.findAll()
 
     return res.status(200).json({ users })
