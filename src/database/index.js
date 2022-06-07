@@ -1,22 +1,10 @@
 const Sequelize = require('sequelize')
-const User = require('../api/models/User')
-const databaseConfig = require('../config/database')
+const dbconfig = require('../config/database')
 
-const models = [User]
+const User = require('../app/models/User')
 
-class Database {
-  constructor () {
-    this.init()
-    this.mongo()
-  }
+const connection = new Sequelize(dbconfig)
 
-  init () {
-    this.connection = new Sequelize(databaseConfig)
+User.init(connection)
 
-    models
-      .map(model => model.init(this.connection))
-      .map(model => model.associate && model.associate(this.connection.models))
-  }
-}
-
-module.exports = new Database()
+module.exports = connection

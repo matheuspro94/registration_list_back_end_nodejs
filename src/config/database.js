@@ -1,4 +1,3 @@
-
 module.exports = {
   dialect: 'postgres',
   host: 'localhost',
@@ -7,7 +6,6 @@ module.exports = {
   database: 'list',
   define: {
     timestamps: true,
-    underscored: true,
-    underscoredAll: true
+    underscored: true
   }
 }
