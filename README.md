@@ -95,7 +95,13 @@ Para fazer a atualização de um usuário faça uma requisição do tipo <strong
 
 ```json
 {
-	"message": "successfully updated"
+	"id": 35,
+	"name": "Matheus proença",
+	"email": "teste@gmail.com",
+	"birthday": "1989-02-08T03:00:00.000Z",
+	"age": 33,
+	"createdAt": "2022-06-10T03:57:16.045Z",
+	"updatedAt": "2022-06-10T05:55:00.475Z"
 }
 ```
 

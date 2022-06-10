@@ -34,7 +34,7 @@ module.exports = {
   },
   async update (req, res) {
     const { id } = req.params
-    const { name, birthday } = req.body
+    const { name, birthday, email } = req.body
 
     const actualYear = new Date().getFullYear()
 
@@ -42,7 +42,7 @@ module.exports = {
 
     const age = Number(actualYear) - Number(formatAge)
 
-    const userID = await User.findByPk(id)
+    let userID = await User.findByPk(id)
 
     if (!userID) {
       return res.status(400).json({ error: 'User not found' })
@@ -51,15 +51,16 @@ module.exports = {
     const user = await User.update({
       name,
       birthday,
+      email,
       age
     }, {
       where: {
         id
       }
     })
-
+    userID = await User.findByPk(id)
     if (user) {
-      return res.status(200).json({ message: 'successfully updated' })
+      return res.status(200).json(userID)
     } else {
       return res.status(400).json({ message: 'user not found' })
     }
@@ -84,5 +85,16 @@ module.exports = {
     } else {
       return res.status(400).json({ message: 'user not found' })
     }
+  },
+  async getUserById (req, res) {
+    const { id } = req.params
+
+    const userID = await User.findByPk(id)
+
+    if (!userID) {
+      return res.status(400).json({ error: 'User not found' })
+    }
+
+    return res.status(200).json(userID)
   }
 }

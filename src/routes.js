@@ -7,5 +7,6 @@ routes.post('/users', UserValidate, UserController.create)
 routes.put('/users/:id', UserValidate, UserController.update)
 routes.delete('/users/:id', UserController.delete)
 routes.get('/users', UserController.index)
+routes.get('/users/:id', UserController.getUserById)
 
 module.exports = routes
